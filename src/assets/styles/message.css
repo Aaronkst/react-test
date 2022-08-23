@@ -1,13 +1,30 @@
-img {
+.avatar {
   height: 100%;
   width: 100%;
   border-radius: 50%;
   overflow: hidden;
 }
 
-p {
+.text {
   margin: 0;
   padding: 0;
+}
+
+@media (min-width: 960px) {
+  .chat-bubble-wrapper {
+    display: flex;
+    margin: .5rem;
+    max-width: 60%;
+    align-items: center;
+  }  
+}
+
+@media (max-width: 960px) {
+  .chat-bubble-wrapper {
+    display: flex;
+    margin: .5rem;
+    align-items: center;
+  }  
 }
 
 .img-wrapper {
@@ -15,20 +32,12 @@ p {
   margin: 1rem;
 }
 
-.chat-bubble-wrapper {
-  display: flex;
-  margin: .5rem;
-  max-width: 60%;
-  align-items: center;
-}
-
 .text-wrapper {
   background-color: rgba(0, 0, 100);
   color: white;
-  padding: 1rem;
+  padding: .5rem;
   max-width: 90%;
   min-width: 20%;
-  border-radius: 25px;
 }
 
 .pull-left {
