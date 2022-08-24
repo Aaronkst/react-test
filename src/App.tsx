@@ -1,11 +1,19 @@
 import React from "react";
 import Message from "./components/Message";
 import "./assets/styles/app.css";
-
-const msgs = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+import { retrieveLocalMessages } from "./modules/utils";
+import { IMessage } from "./redux/features/messages/messageSlice";
 
 const App = () => {
   const [inputMessage, setInputMessage] = React.useState("");
+  const [messages, setMessages] = React.useState([] as IMessage[]);
+
+  React.useEffect(() => {
+    if (messages.length === 0) {
+      const localMessage = retrieveLocalMessages();
+      setMessages([...localMessage]);
+    }
+  }, [messages.length, setMessages]);
 
   const handleMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -15,9 +23,10 @@ const App = () => {
   return (
     <div className="page-wrapper">
       <div className="messages-wrapper">
-        {msgs.map((m) => (
-          <Message key={m} sender="me" message="hello" />
-        ))}
+        {messages.length > 0 &&
+          messages.map((m, i) => (
+            <Message key={i} sender={m.sender} message={m.message} />
+          ))}
       </div>
       <div className="input-wrapper">
         <form className="form-wrapper" onSubmit={handleMessage}>
@@ -28,6 +37,7 @@ const App = () => {
               id="message"
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
+              placeholder={"Type something..."}
               required
             />
           </div>
