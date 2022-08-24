@@ -47,7 +47,11 @@ const App = () => {
   return (
     <div className="page-wrapper">
       <div className="messages-wrapper">
-        {more && <button onClick={handleMore}>Load More</button>}
+        {more && (
+          <button className="load-more-btn" onClick={handleMore}>
+            Load More
+          </button>
+        )}
         {messages.length > 0 &&
           messages.map((m, i) => (
             <Message

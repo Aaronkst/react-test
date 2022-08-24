@@ -1,10 +1,11 @@
 import { IMessage } from "../redux/features/messages/messageSlice";
-import { pageSize } from "../config/pagination.json";
+import pageConfig from "../config/pagination.json";
 
 const retrieveLocalMessages = (
   skip: number = 0
 ): { data: IMessage[]; more: boolean } => {
   try {
+    const { pageSize } = pageConfig;
     skip = skip * pageSize;
     const localMessages = localStorage.getItem("messages");
     if (localMessages) {

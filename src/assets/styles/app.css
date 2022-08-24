@@ -4,6 +4,19 @@ body {
   scroll-behavior: smooth;
 }
 
+.load-more-btn {
+  background: none;
+  display: block;
+  width: 100%;
+  text-decoration: underline;
+  color: rgba(0,0,150);
+  border-radius: 0px;
+}
+
+.load-more-btn:hover {
+  border-radius: 0px;
+}
+
 .page-wrapper {
   height: 100vh;
   display: flex;
