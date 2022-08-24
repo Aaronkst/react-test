@@ -7,32 +7,31 @@ interface IProps {
   message: string;
 }
 
-const Message = ({ sender, message }: IProps): JSX.Element => {
-  const currentUser = sessionStorage.getItem("uid");
+const Message = React.forwardRef<HTMLDivElement, IProps>(
+  ({ sender, message }, ref) => {
+    const currentUser = sessionStorage.getItem("uid");
 
-  const [isSender, setIsSender] = React.useState(false);
+    const isSender = currentUser === sender;
 
-  React.useEffect(() => {
-    if (currentUser === sender) setIsSender(true);
-  }, [currentUser, isSender, sender]);
-
-  return (
-    <div
-      className={
-        isSender
-          ? "pull-right chat-bubble-wrapper"
-          : "pull-left chat-bubble-wrapper"
-      }
-    >
-      <div className="img-wrapper">
-        <img className="avatar" src={defaultAvatar} alt={"default_avatar"} />
+    return (
+      <div
+        className={
+          isSender
+            ? "pull-right chat-bubble-wrapper"
+            : "pull-left chat-bubble-wrapper"
+        }
+        ref={ref}
+      >
+        <div className="img-wrapper">
+          <img className="avatar" src={defaultAvatar} alt={"default_avatar"} />
+        </div>
+        <div className={isSender ? "text-wrapper-sender" : "text-wrapper"}>
+          <p className="text">{isSender ? "You" : sender}</p>
+          <p className="text">{message}</p>
+        </div>
       </div>
-      <div className={isSender ? "text-wrapper-sender" : "text-wrapper"}>
-        <p className="text">{isSender ? "You" : sender}</p>
-        <p className="text">{message}</p>
-      </div>
-    </div>
-  );
-};
+    );
+  }
+);
 
 export default Message;

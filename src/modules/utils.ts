@@ -1,10 +1,30 @@
 import { IMessage } from "../redux/features/messages/messageSlice";
+import { pageSize } from "../config/pagination.json";
 
-const retrieveLocalMessages = (): IMessage[] => {
+const retrieveLocalMessages = (
+  skip: number = 0
+): { data: IMessage[]; more: boolean } => {
   try {
+    skip = skip * pageSize;
     const localMessages = localStorage.getItem("messages");
-    if (localMessages) return JSON.parse(localMessages);
-    return [];
+    if (localMessages) {
+      let messages = JSON.parse(localMessages);
+      if (messages.length <= pageSize) return { data: messages, more: false };
+      else {
+        messages = messages.reverse();
+        console.log(messages);
+        if (skip + pageSize >= messages.length)
+          return {
+            data: messages.slice(skip, skip + pageSize).reverse(),
+            more: false,
+          };
+        return {
+          data: messages.slice(skip, skip + pageSize).reverse(),
+          more: true,
+        };
+      }
+    }
+    return { data: [], more: false };
   } catch (e) {
     throw e;
   }
@@ -15,7 +35,7 @@ const updateLocalMessage = (newMsg: IMessage): boolean => {
     const localMessages = retrieveLocalMessages();
     localStorage.setItem(
       "messages",
-      JSON.stringify(localMessages.concat(newMsg))
+      JSON.stringify(localMessages.data.concat(newMsg))
     );
     return true;
   } catch (e) {
