@@ -1,23 +1,29 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { parseMessage } from "./modules/utils";
+
+import {
+  newMessage,
+  getMessages,
+  IMessage,
+} from "./redux/features/messages/messageSlice";
+
 import Message from "./components/Message";
+
 import "./assets/styles/app.css";
-import { retrieveLocalMessages } from "./modules/utils";
-import { IMessage } from "./redux/features/messages/messageSlice";
 
 const App = () => {
-  const [inputMessage, setInputMessage] = React.useState("");
-  const [messages, setMessages] = React.useState([] as IMessage[]);
+  const dispatch = useDispatch();
+  const messages = useSelector(getMessages);
 
-  React.useEffect(() => {
-    if (messages.length === 0) {
-      const localMessage = retrieveLocalMessages();
-      setMessages([...localMessage]);
-    }
-  }, [messages.length, setMessages]);
+  const sender = sessionStorage.getItem("uid");
+  if (!sender) sessionStorage.setItem("uid", new Date().getTime().toString());
+
+  const [inputMessage, setInputMessage] = React.useState("");
 
   const handleMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    alert(inputMessage);
+    dispatch(newMessage(parseMessage(inputMessage)));
   };
 
   return (

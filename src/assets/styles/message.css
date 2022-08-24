@@ -11,30 +11,35 @@
 }
 
 @media (min-width: 960px) {
-  .chat-bubble-wrapper {
-    display: flex;
-    margin: .5rem;
-    max-width: 60%;
-    align-items: center;
-  }  
+  .img-wrapper {
+    width: 5%;
+    margin: 1rem;
+  }
 }
 
 @media (max-width: 960px) {
-  .chat-bubble-wrapper {
-    display: flex;
-    margin: .5rem;
-    align-items: center;
-  }  
+  .img-wrapper {
+    width: 10%;
+    margin: 1rem;
+  }
 }
 
-.img-wrapper {
-  width: 10%;
-  margin: 1rem;
-}
+.chat-bubble-wrapper {
+  display: flex;
+  margin: .5rem;
+  align-items: center;
+}  
 
 .text-wrapper {
   background-color: rgba(0, 0, 100);
   color: white;
+  padding: .5rem;
+  max-width: 90%;
+  min-width: 20%;
+}
+
+.text-wrapper-sender {
+  background-color: rgba(200, 200, 200);
   padding: .5rem;
   max-width: 90%;
   min-width: 20%;

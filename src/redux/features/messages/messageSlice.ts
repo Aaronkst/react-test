@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { parseMessage, retrieveLocalMessages } from "../../../modules/utils";
+import {
+  retrieveLocalMessages,
+  updateLocalMessage,
+} from "../../../modules/utils";
 import type { RootState } from "../../store";
 
 interface IMessage {
@@ -13,7 +16,7 @@ interface IMessageState {
 
 // Define the initial state using that type
 const initialState: IMessageState = {
-  messages: [],
+  messages: retrieveLocalMessages(),
 };
 
 export const messageSlice = createSlice({
@@ -24,10 +27,8 @@ export const messageSlice = createSlice({
     // sync here
     newMessage: (state, action) => {
       try {
-        const localMessages = retrieveLocalMessages();
-        const message = parseMessage(action.payload);
-        localMessages.push(message);
-        return { messages: state.messages.concat(message) };
+        updateLocalMessage(action.payload);
+        return { messages: state.messages.concat(action.payload) };
       } catch (e) {
         console.log(e);
         alert("Unexpected Error");
@@ -41,5 +42,6 @@ export type { IMessage };
 export const { newMessage } = messageSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const messages = (state: RootState): any => state.message;
+export const getMessages = (state: RootState): IMessage[] =>
+  state.message.messages;
 export default messageSlice.reducer;

@@ -27,7 +27,7 @@ const Message = ({ sender, message }: IProps): JSX.Element => {
       <div className="img-wrapper">
         <img className="avatar" src={defaultAvatar} alt={"default_avatar"} />
       </div>
-      <div className="text-wrapper">
+      <div className={isSender ? "text-wrapper-sender" : "text-wrapper"}>
         <p className="text">{isSender ? "You" : sender}</p>
         <p className="text">{message}</p>
       </div>

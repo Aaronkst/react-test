@@ -10,6 +10,19 @@ const retrieveLocalMessages = (): IMessage[] => {
   }
 };
 
+const updateLocalMessage = (newMsg: IMessage): boolean => {
+  try {
+    const localMessages = retrieveLocalMessages();
+    localStorage.setItem(
+      "messages",
+      JSON.stringify(localMessages.concat(newMsg))
+    );
+    return true;
+  } catch (e) {
+    throw e;
+  }
+};
+
 const parseMessage = (message: string): IMessage => {
   try {
     const sender = sessionStorage.getItem("uid");
@@ -20,4 +33,4 @@ const parseMessage = (message: string): IMessage => {
   }
 };
 
-export { retrieveLocalMessages, parseMessage };
+export { retrieveLocalMessages, updateLocalMessage, parseMessage };

@@ -3,7 +3,7 @@ import type { RootState } from "../store";
 import messageReducer from "../features/messages/messageSlice";
 
 const appReducer = combineReducers({
-  messages: messageReducer,
+  message: messageReducer,
 });
 
 const rootReducer: Reducer = (state: RootState, action: AnyAction) => {
